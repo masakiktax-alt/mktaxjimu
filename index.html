@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>業務ポータル｜PSE総合会計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plum-1:#3a1438;       /* 深いプラム（ロゴ左の濃い面） */
+  --plum-2:#5e1d54;       /* 中間 */
+  --magenta:#c8528b;      /* ロゴ中央のピンク */
+  --magenta-soft:#e08bb5;
+  --rose:#f4d9e6;         /* 淡いピンクの背景アクセント */
+  --black:#1a1a1a;
+  --ink:#252025;
+  --sub:#776976;
+  --paper:#faf7f8;
+  --paper-2:#f4eef1;
+  --card:#ffffff;
+  --line:#e6dde2;
+  --line-2:#efe6eb;
+  --grad:linear-gradient(135deg,#3a1438 0%,#7a2660 45%,#c8528b 100%);
+  --shadow:0 1px 2px rgba(58,20,56,.06),0 6px 18px rgba(58,20,56,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans JP",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+
+/* ===== Header ===== */
+header{
+  background:var(--grad);color:#fff;
+  border-bottom:none;position:relative;overflow:hidden;
+}
+header::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 85% 30%,rgba(255,255,255,.10),transparent 50%);
+  pointer-events:none;
+}
+.head-inner{
+  max-width:1180px;margin:0 auto;padding:22px 24px 20px;
+  display:flex;align-items:center;gap:20px;position:relative;
+}
+.logo-wrap{
+  flex:0 0 auto;background:#fff;padding:9px 14px;border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.logo-wrap img{display:block;height:36px;width:auto}
+.head-titles{flex:1 1 auto;min-width:0}
+.head-titles h1{
+  margin:0;font-family:"Noto Serif JP",serif;font-weight:700;
+  font-size:21px;letter-spacing:.06em;color:#fff;
+}
+.head-titles .sub{
+  font-size:12px;color:rgba(255,255,255,.78);letter-spacing:.08em;
+  margin-top:3px;
+}
+.head-meta{flex:0 0 auto;text-align:right;font-size:12px;color:rgba(255,255,255,.7)}
+.head-meta .clock{font-size:15px;color:#fff;font-weight:700;letter-spacing:.04em}
+
+/* ===== Nav ===== */
+nav.cats{background:rgba(26,10,25,.92);backdrop-filter:blur(8px)}
+nav.cats .inner{
+  max-width:1180px;margin:0 auto;padding:0 16px;
+  display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+}
+nav.cats .inner::-webkit-scrollbar{display:none}
+nav.cats a{
+  flex:0 0 auto;padding:11px 14px;font-size:12.5px;color:rgba(255,255,255,.65);
+  text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;
+  transition:color .15s,border-color .15s;
+}
+nav.cats a:hover{color:#fff}
+nav.cats a.active{color:#fff;border-bottom-color:var(--magenta)}
+
+/* ===== Layout ===== */
+main{max-width:1180px;margin:0 auto;padding:30px 24px 60px}
+
+/* security notice */
+.sec-notice{
+  font-size:12px;color:var(--sub);background:var(--paper-2);
+  border:1px solid var(--line);border-radius:8px;padding:9px 16px;
+  margin-bottom:20px;letter-spacing:.02em;
+}
+
+/* daily login bar */
+.daily{
+  background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:18px 18px 16px;box-shadow:var(--shadow);margin-bottom:34px;
+  position:relative;overflow:hidden;
+}
+.daily::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--grad);
+}
+.daily .lbl{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-top:3px}
+.daily .lbl b{font-family:"Noto Serif JP",serif;font-size:15px;letter-spacing:.05em;color:var(--plum-1)}
+.daily .lbl .tag{
+  font-size:11px;color:var(--magenta);border:1px solid var(--magenta-soft);
+  background:var(--rose);border-radius:99px;padding:2px 10px;font-weight:500;
+}
+.daily-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:10px}
+.dbtn{
+  display:flex;flex-direction:column;gap:4px;align-items:flex-start;
+  padding:12px 13px;border:1px solid var(--line);border-radius:10px;
+  background:#fff;text-decoration:none;color:var(--ink);transition:.15s;
+}
+.dbtn:hover{
+  border-color:var(--magenta);transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(200,82,139,.15);
+}
+.dbtn .nm{font-size:13px;font-weight:700;color:var(--plum-1)}
+.dbtn .ds{font-size:10.5px;color:var(--sub)}
+
+/* Gmail attention */
+.dbtn-attn{
+  border-color:var(--magenta);background:linear-gradient(135deg,#fff 60%,var(--rose));
+  position:relative;
+}
+.dbtn-attn .nm{color:var(--magenta)}
+.attn-badge{
+  display:inline-block;font-size:9.5px;font-weight:700;color:#fff;
+  background:var(--magenta);border-radius:4px;padding:1px 7px;
+  letter-spacing:.08em;margin-bottom:3px;
+}
+
+/* tooltip on hover */
+.dbtn-tip{position:relative}
+.dbtn-tip::before{
+  content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;
+  transform:translateX(-50%);width:260px;padding:10px 12px;
+  background:var(--plum-1);color:#f4eef1;font-size:11px;line-height:1.55;
+  border-radius:8px;box-shadow:0 4px 16px rgba(58,20,56,.25);
+  opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;
+  pointer-events:none;z-index:20;font-weight:400;
+}
+.dbtn-tip::after{
+  content:"";position:absolute;bottom:calc(100% + 2px);left:50%;
+  transform:translateX(-50%);border:6px solid transparent;
+  border-top-color:var(--plum-1);
+  opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s;
+  pointer-events:none;z-index:20;
+}
+.dbtn-tip:hover::before,.dbtn-tip:hover::after{opacity:1;visibility:visible}
+.dbtn-tip:hover{z-index:21}
+
+/* sections */
+section{margin-bottom:42px;scroll-margin-top:100px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.sec-head .no{
+  font-family:"Noto Serif JP",serif;color:var(--magenta);
+  font-size:13px;letter-spacing:.12em;font-weight:700;
+}
+.sec-head h2{
+  margin:0;font-family:"Noto Serif JP",serif;font-size:21px;font-weight:700;
+  letter-spacing:.03em;color:var(--plum-1);
+}
+.sec-head .ja{font-size:12px;color:var(--sub)}
+.sec-rule{
+  height:2px;background:linear-gradient(90deg,var(--magenta),transparent);
+  margin:6px 0 20px;opacity:.55;border-radius:1px;
+}
+
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:15px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;
+  transition:.15s;
+}
+.card:hover{border-color:var(--magenta-soft)}
+.card h3{
+  margin:0 0 11px;font-size:14px;font-weight:700;color:var(--plum-1);
+  display:flex;align-items:center;gap:8px;
+}
+.card h3 .dot{
+  width:8px;height:8px;border-radius:2px;background:var(--grad);
+  flex:0 0 auto;transform:rotate(45deg);
+}
+.linkrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.lk{
+  display:inline-flex;align-items:center;gap:5px;font-size:12px;text-decoration:none;
+  color:var(--plum-2);background:var(--paper-2);border:1px solid var(--line-2);
+  border-radius:7px;padding:5px 10px;transition:.13s;
+}
+.lk:hover{background:#fff;border-color:var(--magenta);color:var(--magenta)}
+.lk.ext::after{content:"↗";font-size:10px;opacity:.55}
+.lk.year{
+  color:#fff;background:var(--grad);border:none;font-weight:600;
+}
+.lk.year:hover{filter:brightness(1.1);color:#fff}
+
+/* related sites footer */
+.related{
+  margin-top:50px;padding:28px 24px;background:linear-gradient(135deg,#fff 0%,var(--rose) 100%);
+  border:1px solid var(--line);border-radius:14px;
+}
+.related h2{
+  margin:0 0 4px;font-family:"Noto Serif JP",serif;font-size:16px;
+  color:var(--plum-1);letter-spacing:.06em;font-weight:700;
+}
+.related p{margin:0 0 16px;font-size:12px;color:var(--sub)}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:11px}
+.rbtn{
+  display:block;padding:14px 16px;background:#fff;border:1px solid var(--line);
+  border-radius:10px;text-decoration:none;color:var(--ink);transition:.16s;
+  position:relative;
+}
+.rbtn:hover{
+  border-color:var(--magenta);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(58,20,56,.10);
+}
+.rbtn .rb-label{font-size:10.5px;color:var(--magenta);letter-spacing:.1em;font-weight:600}
+.rbtn .rb-name{
+  font-family:"Noto Serif JP",serif;font-size:15px;font-weight:700;
+  color:var(--plum-1);margin:2px 0 1px;letter-spacing:.02em;
+}
+.rbtn .rb-url{font-size:11px;color:var(--sub);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.rbtn::after{
+  content:"↗";position:absolute;top:14px;right:16px;
+  color:var(--magenta-soft);font-size:13px;
+}
+
+/* foot */
+footer{border-top:1px solid var(--line);background:var(--paper-2);margin-top:0}
+.foot{
+  max-width:1180px;margin:0 auto;padding:20px 24px;font-size:11.5px;color:var(--sub);
+  display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between;
+}
+.foot .warn{color:var(--magenta)}
+
+@media(max-width:640px){
+  .head-meta{display:none}
+  .head-titles h1{font-size:17px}
+  .logo-wrap img{height:30px}
+  main{padding:24px 16px 50px}
+  .related{padding:22px 18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <div class="logo-wrap"><img src="data:image/jpeg;base64,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" alt="PSE総合会計"></div>
+    <div class="head-titles">
+      <h1>業務ポータル</h1>
+      <div class="sub">栗原正樹税理士事務所</div>
+    </div>
+    <div class="head-meta">
+      <div class="clock" id="clock">—</div>
+      <div id="datej">—</div>
+    </div>
+  </div>
+  <nav class="cats">
+    <div class="inner" id="nav"></div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- セキュリティ通知 -->
+  <div class="sec-notice">🔒 このポータルのセキュリティは、各サービスへのGoogleアカウント等のログインにより保障されています。</div>
+
+  <!-- 主要リンク -->
+  <div class="daily">
+    <div class="lbl"><b>主要リンク</b></div>
+    <div class="daily-grid">
+      <a class="dbtn dbtn-attn" href="https://mail.google.com/" target="_blank" rel="noopener"><span class="attn-badge">毎日確認</span><span class="nm">Gmail</span><span class="ds">メール</span></a>
+      <a class="dbtn" href="https://calendar.google.com/" target="_blank" rel="noopener"><span class="nm">カレンダー</span><span class="ds">期限・予定</span></a>
+      <a class="dbtn" href="https://drive.google.com/" target="_blank" rel="noopener"><span class="nm">Google Drive</span><span class="ds">社内共有</span></a>
+      <a class="dbtn" href="https://biz.moneyforward.com/service/login/accounting/" target="_blank" rel="noopener"><span class="nm">マネーフォワード</span><span class="ds">クラウド会計</span></a>
+      <a class="dbtn" href="https://next-kaikei.yayoi-kk.co.jp/" target="_blank" rel="noopener"><span class="nm">弥生ネクスト</span><span class="ds">クラウド会計・経費・請求</span></a>
+      <a class="dbtn dbtn-tip" href="https://www.yayoi-kk.co.jp/pap/" target="_blank" rel="noopener" data-tip="弥生PAP会員向けパートナー特典。弥生会計AE等の製品ライセンス提供、顧問先とのデータ共有、会員専用フリーダイヤル、税理士紹介ナビでの顧問先獲得支援、各種研修・セミナーなど。"><span class="nm">弥生PAP</span><span class="ds">会員ページ</span></a>
+      <a class="dbtn dbtn-tip" href="https://www.mahoujin.co.jp/" target="_blank" rel="noopener" data-tip="法人税・消費税・相続税・所得税等の申告書作成に加え、法人設立届・青色申告承認申請・消費税届出書など各種届出書の作成も可能。作成データは電子申告形式に変換し、e-Tax・eLTAXへ直接送信できます。"><span class="nm">魔法陣</span><span class="ds">税務申告ソフト</span></a>
+      <a class="dbtn dbtn-tip" href="https://www.e-tax.nta.go.jp/" target="_blank" rel="noopener" data-tip="国税の電子申告・納税システム。メッセージボックスで申告済み内容の確認・受信通知の閲覧、届出書の提出、納税証明書の請求などが行えます。"><span class="nm">e-Tax</span><span class="ds">国税の電子申告</span></a>
+      <a class="dbtn dbtn-tip" href="https://www.eltax.lta.go.jp/" target="_blank" rel="noopener" data-tip="地方税ポータル。法人住民税・事業税の申告済み内容の確認、給与支払報告書・特別徴収関係届出の提出、償却資産申告などが行えます。"><span class="nm">eLTAX</span><span class="ds">地方税ポータル</span></a>
+      <a class="dbtn" href="https://zoom.us/signin" target="_blank" rel="noopener"><span class="nm">Zoom</span><span class="ds">Web会議</span></a>
+    </div>
+  </div>
+
+  <!-- 01 -->
+  <section id="kokuzei">
+    <div class="sec-head"><span class="no">01</span><h2>国税・税務</h2><span class="ja">申告・納税・通達</span></div>
+    <div class="sec-rule"></div>
+    <div class="cardgrid">
+      <div class="card"><h3><span class="dot"></span>電子申告・納税</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.e-tax.nta.go.jp/" target="_blank" rel="noopener">e-Tax</a>
+        <a class="lk ext" href="https://www.nta.go.jp/" target="_blank" rel="noopener">国税庁トップ</a>
+        <a class="lk ext" href="https://www.keisan.nta.go.jp/" target="_blank" rel="noopener">確定申告書等作成コーナー</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>様式・届出</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.nta.go.jp/taxes/tetsuzuki/shinsei/index.htm" target="_blank" rel="noopener">申告・申請・届出等、用紙</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>調べる</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/index2.htm" target="_blank" rel="noopener">タックスアンサー</a>
+        <a class="lk ext" href="https://www.nta.go.jp/law/tsutatsu/kihon/index.htm" target="_blank" rel="noopener">法令解釈通達</a>
+        <a class="lk ext" href="https://www.nta.go.jp/law/shitsugi/index.htm" target="_blank" rel="noopener">質疑応答事例</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>源泉・年末調整</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.nta.go.jp/users/gensen/index.htm" target="_blank" rel="noopener">源泉徴収義務者ページ</a>
+        <a class="lk ext" href="https://www.nta.go.jp/users/gensen/nencho/index.htm" target="_blank" rel="noopener">年末調整特集</a>
+        <a class="lk ext year" href="https://www.nta.go.jp/publication/pamph/gensen/zeigakuhyo2026/01.htm" target="_blank" rel="noopener">R8 源泉徴収税額表</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>消費税・インボイス</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.nta.go.jp/taxes/shiraberu/zeimokubetsu/shohi/keigenzeiritsu/invoice.htm" target="_blank" rel="noopener">インボイス制度</a>
+        <a class="lk ext" href="https://www.invoice-kohyo.nta.go.jp/" target="_blank" rel="noopener">適格請求書発行事業者 公表サイト</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>番号・評価</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.houjin-bangou.nta.go.jp/" target="_blank" rel="noopener">法人番号公表サイト</a>
+        <a class="lk ext" href="https://www.rosenka.nta.go.jp/" target="_blank" rel="noopener">路線価図・評価倍率表</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>納税</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.nta.go.jp/taxes/nozei/nofu/index.htm" target="_blank" rel="noopener">ダイレクト納付・納付情報</a>
+        <a class="lk ext" href="https://www.nta.go.jp/taxes/nozei/nofu/01.htm" target="_blank" rel="noopener">納税証明書</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="chihou">
+    <div class="sec-head"><span class="no">02</span><h2>地方税</h2><span class="ja">電子申告・自治体</span></div>
+    <div class="sec-rule"></div>
+    <div class="cardgrid">
+      <div class="card"><h3><span class="dot"></span>地方税電子申告</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.eltax.lta.go.jp/" target="_blank" rel="noopener">eLTAX</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>主要自治体</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.city.saitama.lg.jp/" target="_blank" rel="noopener">さいたま市</a>
+        <a class="lk ext" href="https://www.tax.metro.tokyo.lg.jp/" target="_blank" rel="noopener">東京都主税局</a>
+        <a class="lk ext" href="https://www.pref.saitama.lg.jp/" target="_blank" rel="noopener">埼玉県</a>
+        <a class="lk ext" href="https://www.city.kawaguchi.lg.jp/" target="_blank" rel="noopener">川口市</a>
+        <a class="lk ext" href="https://www.city.toda.saitama.jp/" target="_blank" rel="noopener">戸田市</a>
+        <a class="lk ext" href="https://www.city.warabi.saitama.jp/" target="_blank" rel="noopener">蕨市</a>
+        <a class="lk ext" href="https://www.city.ageo.lg.jp/" target="_blank" rel="noopener">上尾市</a>
+        <a class="lk ext" href="https://www.city.koshigaya.saitama.jp/" target="_blank" rel="noopener">越谷市</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="shaho">
+    <div class="sec-head"><span class="no">03</span><h2>社会保険・労働保険</h2><span class="ja">協会けんぽ・年金・労保</span></div>
+    <div class="sec-rule"></div>
+    <div class="cardgrid">
+      <div class="card"><h3><span class="dot"></span>健康保険</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.kyoukaikenpo.or.jp/" target="_blank" rel="noopener">協会けんぽ</a>
+        <a class="lk ext year" href="https://www.kyoukaikenpo.or.jp/about/business/insurance_rate/premium_prefectures/r08/index.html" target="_blank" rel="noopener">R8 保険料額表</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>厚生年金</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.nenkin.go.jp/" target="_blank" rel="noopener">日本年金機構</a>
+        <a class="lk ext" href="https://www.nenkin.go.jp/service/kounen/hokenryo/ryogaku/ryogakuhyo/index.html" target="_blank" rel="noopener">厚生年金保険料額表</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>電子申請</h3><div class="linkrow">
+        <a class="lk ext" href="https://shinsei.e-gov.go.jp/" target="_blank" rel="noopener">e-Gov電子申請</a>
+        <a class="lk ext" href="https://gbiz-id.go.jp/top/" target="_blank" rel="noopener">GビズID</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>雇用・労災</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.hellowork.mhlw.go.jp/" target="_blank" rel="noopener">ハローワーク</a>
+        <a class="lk ext year" href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000108634.html" target="_blank" rel="noopener">雇用保険料率</a>
+        <a class="lk ext" href="https://www.mhlw.go.jp/bunya/roudoukijun/roudouhokenpoint.html" target="_blank" rel="noopener">労働保険年度更新</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="haisou">
+    <div class="sec-head"><span class="no">04</span><h2>配送・郵送</h2><span class="ja">資料返却・控え発送</span></div>
+    <div class="sec-rule"></div>
+    <div class="cardgrid">
+      <div class="card"><h3><span class="dot"></span>ヤマト運輸</h3><div class="linkrow">
+        <a class="lk ext" href="https://member.kms.kuronekoyamato.co.jp/login" target="_blank" rel="noopener">クロネコメンバーズ ログイン</a>
+        <a class="lk ext" href="https://toi.kuronekoyamato.co.jp/cgi-bin/tneko" target="_blank" rel="noopener">荷物お問い合わせ（追跡）</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>日本郵便</h3><div class="linkrow">
+        <a class="lk ext" href="https://tracking.post.japanpost.jp/services/srv/search/" target="_blank" rel="noopener">郵便追跡サービス</a>
+        <a class="lk ext" href="https://www.post.japanpost.jp/service/letterpack/" target="_blank" rel="noopener">レターパック</a>
+        <a class="lk ext" href="https://clickpost.jp/" target="_blank" rel="noopener">クリックポスト</a>
+        <a class="lk ext" href="https://www.post.japanpost.jp/zipcode/" target="_blank" rel="noopener">郵便番号検索</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>佐川急便</h3><div class="linkrow">
+        <a class="lk ext" href="https://k2k.sagawa-exp.co.jp/p/web/okurijoinput.do" target="_blank" rel="noopener">お荷物問い合わせ</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="touki">
+    <div class="sec-head"><span class="no">05</span><h2>登記・法人情報</h2><span class="ja">登記・番号確認</span></div>
+    <div class="sec-rule"></div>
+    <div class="cardgrid">
+      <div class="card"><h3><span class="dot"></span>登記オンライン</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.touki-kyoutaku-online.moj.go.jp/" target="_blank" rel="noopener">登記・供託オンライン申請</a>
+        <a class="lk ext" href="https://www1.touki.or.jp/" target="_blank" rel="noopener">登記情報提供サービス</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>番号確認</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.houjin-bangou.nta.go.jp/" target="_blank" rel="noopener">法人番号公表サイト</a>
+        <a class="lk ext" href="https://www.invoice-kohyo.nta.go.jp/" target="_blank" rel="noopener">適格請求書発行事業者 公表</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section id="hourei">
+    <div class="sec-head"><span class="no">06</span><h2>法令・官報・調査</h2><span class="ja">条文・判例・統計</span></div>
+    <div class="sec-rule"></div>
+    <div class="cardgrid">
+      <div class="card"><h3><span class="dot"></span>法令検索</h3><div class="linkrow">
+        <a class="lk ext" href="https://laws.e-gov.go.jp/" target="_blank" rel="noopener">e-Gov法令検索</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>官報・判例</h3><div class="linkrow">
+        <a class="lk ext" href="https://kanpou.npb.go.jp/" target="_blank" rel="noopener">官報検索</a>
+        <a class="lk ext" href="https://www.courts.go.jp/app/hanrei_jp/searchTop" target="_blank" rel="noopener">裁判所 判例検索</a>
+      </div></div>
+      <div class="card"><h3><span class="dot"></span>評価・統計</h3><div class="linkrow">
+        <a class="lk ext" href="https://www.rosenka.nta.go.jp/" target="_blank" rel="noopener">財産評価基準書</a>
+        <a class="lk ext" href="https://www.e-stat.go.jp/" target="_blank" rel="noopener">e-Stat</a>
+        <a class="lk ext" href="https://www.land.mlit.go.jp/landPrice/AriaServlet?MOD=2&TYP=0" target="_blank" rel="noopener">地価公示</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section id="tools">
+    <div class="sec-head"><span class="no">07</span><h2>計算・料率</h2><span class="ja">年度別の表を参照</span></div>
+    <div class="sec-rule"></div>
+    <div class="cardgrid">
+      <div class="card"><h3><span class="dot"></span>年度別 料率・税額表</h3><div class="linkrow">
+        <a class="lk ext year" href="https://www.nta.go.jp/publication/pamph/gensen/zeigakuhyo2026/01.htm" target="_blank" rel="noopener">R8 源泉徴収税額表</a>
+        <a class="lk ext" href="https://www.kyoukaikenpo.or.jp/about/business/insurance_rate/premium_prefectures/r08/index.html" target="_blank" rel="noopener">協会けんぽ料額表</a>
+        <a class="lk ext" href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000108634.html" target="_blank" rel="noopener">雇用保険料率</a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 関連サイト -->
+  <section class="related" id="related">
+    <h2>関連サイト</h2>
+    <p>PSEグループおよび栗原正樹の各サイトへ</p>
+    <div class="related-grid">
+      <a class="rbtn" href="https://masakikurihara.com/" target="_blank" rel="noopener">
+        <div class="rb-label">RESEARCH</div>
+        <div class="rb-name">栗原正樹 研究サイト</div>
+        <div class="rb-url">masakikurihara.com</div>
+      </a>
+      <a class="rbtn" href="https://mkctaoffice.com/" target="_blank" rel="noopener">
+        <div class="rb-label">TAX OFFICE</div>
+        <div class="rb-name">栗原正樹税理士事務所</div>
+        <div class="rb-url">mkctaoffice.com</div>
+      </a>
+      <a class="rbtn" href="https://professionsedge.com/" target="_blank" rel="noopener">
+        <div class="rb-label">CORPORATE</div>
+        <div class="rb-name">合同会社 ProfeSsions Edge</div>
+        <div class="rb-url">professionsedge.com</div>
+      </a>
+      <a class="rbtn" href="https://chitekium.com/" target="_blank" rel="noopener">
+        <div class="rb-label">AI DIVISION</div>
+        <div class="rb-name">チテキウム</div>
+        <div class="rb-url">chitekium.com</div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot">
+    <span>リンク先・年度別資料は毎年見直してください。</span>
+    <span class="warn">⚠ ID・パスワード・利用者識別番号はこのページに置かないこと。</span>
+  </div>
+</footer>
+
+<script>
+const wk=['日','月','火','水','木','金','土'];
+function tick(){
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  document.getElementById('clock').textContent=`${p(d.getHours())}:${p(d.getMinutes())}`;
+  const r=d.getFullYear()-2018;
+  document.getElementById('datej').textContent=`令和${r}年 ${d.getMonth()+1}月${d.getDate()}日(${wk[d.getDay()]})`;
+}
+tick();setInterval(tick,1000*20);
+
+const cats=[
+  ['kokuzei','国税・税務'],['chihou','地方税'],['shaho','社保・労保'],
+  ['haisou','配送・郵送'],['touki','登記・法人情報'],['hourei','法令・官報'],
+  ['tools','計算・料率'],['related','関連サイト'],
+];
+const nav=document.getElementById('nav');
+cats.forEach(([id,t])=>{
+  const a=document.createElement('a');a.href='#'+id;a.textContent=t;a.dataset.id=id;nav.appendChild(a);
+});
+const navlinks=[...nav.querySelectorAll('a')];
+const obs=new IntersectionObserver(es=>{
+  es.forEach(en=>{if(en.isIntersecting){
+    navlinks.forEach(a=>a.classList.toggle('active',a.dataset.id===en.target.id));
+  }});
+},{rootMargin:'-100px 0px -70% 0px'});
+document.querySelectorAll('section').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
