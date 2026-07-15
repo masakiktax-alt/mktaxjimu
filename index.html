@@ -83,6 +83,25 @@ nav.cats a.active{color:#fff;border-bottom-color:var(--magenta)}
 /* ===== Layout ===== */
 main{max-width:1180px;margin:0 auto;padding:30px 24px 60px}
 
+/* Gemini highlight */
+.dbtn-gem{
+  background:linear-gradient(135deg,#1a0a2e 0%,#2d1b69 40%,#667eea 100%) !important;
+  border-color:#667eea !important;color:#fff;position:relative;
+  grid-column:span 2;
+}
+.dbtn-gem .nm{color:#fff !important;font-size:15px}
+.dbtn-gem .ds{color:rgba(255,255,255,.75)}
+.dbtn-gem:hover{
+  border-color:#a78bfa !important;
+  box-shadow:0 4px 20px rgba(102,126,234,.35) !important;
+}
+.gem-icon{
+  font-size:20px;line-height:1;
+  background:linear-gradient(135deg,#667eea,#a78bfa,#f093fb);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
 /* security notice */
 .sec-notice{
   font-size:12px;color:var(--sub);background:var(--paper-2);
@@ -282,6 +301,8 @@ footer{border-top:1px solid var(--line);background:var(--paper-2);margin-top:0}
       <a class="dbtn dbtn-tip" href="https://www.e-tax.nta.go.jp/" target="_blank" rel="noopener" data-tip="国税の電子申告・納税システム。メッセージボックスで申告済み内容の確認・受信通知の閲覧、届出書の提出、納税証明書の請求などが行えます。"><span class="nm">e-Tax</span><span class="ds">国税の電子申告</span></a>
       <a class="dbtn dbtn-tip" href="https://www.eltax.lta.go.jp/" target="_blank" rel="noopener" data-tip="地方税ポータル。法人住民税・事業税の申告済み内容の確認、給与支払報告書・特別徴収関係届出の提出、償却資産申告などが行えます。"><span class="nm">eLTAX</span><span class="ds">地方税ポータル</span></a>
       <a class="dbtn" href="https://zoom.us/signin" target="_blank" rel="noopener"><span class="nm">Zoom</span><span class="ds">Web会議</span></a>
+      <a class="dbtn" href="https://remotedesktop.google.com/access" target="_blank" rel="noopener"><span class="nm">リモートデスクトップ</span><span class="ds">事務所PCを遠隔操作</span></a>
+      <a class="dbtn dbtn-gem" href="https://gemini.google.com/" target="_blank" rel="noopener" onclick="return confirm('【Gemini利用上の注意】\n\nWorkspaceアカウントでのGemini利用にはエンタープライズ級のデータ保護が適用され、入力内容がAIの学習に使われることはありません。\n\nただし以下の情報は絶対に入力しないでください。\n\n✕ マイナンバー（個人番号）\n✕ 顧問先・従業員の給与額や口座情報\n✕ パスワード・利用者識別番号\n✕ その他、特定個人を識別できる情報\n\n上記を理解しました。Geminiを開きますか？');"><span class="gem-icon">✦</span><span class="nm">Gemini</span><span class="ds">Google AI アシスタント</span></a>
     </div>
   </div>
 
